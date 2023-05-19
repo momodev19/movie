@@ -1,6 +1,7 @@
 
-const socket = new WebSocket("ws://127.0.0.1:6969/");
-const movie = document.getElementById('movie');
+const socket = new WebSocket("ws://127.0.0.1:6969/")
+const movie = document.getElementById('movie')
+const fiveMinutes = 300000
 
 const sendMessage = (msg, time) => {
 	socket.send(JSON.stringify({
@@ -8,6 +9,13 @@ const sendMessage = (msg, time) => {
 		time: time
 	}))
 }
+
+// keep connection alive
+const ping = () => {
+	socket.send('ping')
+}
+
+setInterval(ping, fiveMinutes);
 
 const getMessage = (data) => {
 	return JSON.parse(data)
